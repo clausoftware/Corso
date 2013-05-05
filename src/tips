@@ -1,0 +1,4 @@
+-	dupa ce se da comanda, serverul verifica daca exista produsele selectatae;
+daca nu, arunca o exceptie, iar cand clientul o prinde ii cere serverului o lista cu produse alternative
+
+-	

@@ -1,0 +1,92 @@
+SERVER:
+	- IOderLine
+		get/setProduct() - Product
+		get/setQuantity() - Integer
+	- OrderLine implements IOrderLine
+	
+	- ISubOrder
+		get/setOrderLines() - ArrayList<IOrderLine>()
+		getTotal() - Double
+		get/setSubOrderID() - optionally - //setat de Order
+	- SubOrder implements ISubOrder
+	
+	- IOrder
+		get/setSubOrders() - ArrayList<ISubOrder>()
+		get/setTotal() - Double
+		get/setOrderID - String //compus inteligent
+	- Order implements IOrder
+	
+	- IOrderableItem
+		get/setProductName() - String
+		get/setPrice() - Double
+		get/setCategory() - String
+		get/setActive() - boolean
+		
+	- IPromotionalArticle implements IOrderableItem
+		get/setComponentProducts() - ArrayList<Product>()
+		get/setDiscount() - Integer
+		getPrice() - Double
+	- PromotionalArticle implements IPromotionalArticle
+	
+	- IProduct implements IOrderableItem
+		get/setUOM() - String
+		get/setWeight() - Integer
+		get/setIngredients() - String
+	- Product(abstract) implements IProduct
+	
+	- Dessert extends Product
+	- Drink extends Product
+	
+	- IUser
+		get/setAccessCode() - String //criptat MD5
+		get/setUserName() - String
+		get/setRole() - String //probabil stocate intr-un fisier
+		
+	- User implements IUser
+			
+	- Discount (abstract)
+		get/setThreshold() (=pragValoric) - Double
+		get/setDiscountValue() - Integer
+		applyDiscount(Order order) - Double
+	
+	- FixedDiscount extends Discount
+		applyDiscount(Order order) //aplica formula cu suma fixa
+	- PercentageDiscount extends Discount
+		applyDiscount(Order order) //aplica formula cu procent
+	- MixedDiscount extends Discount
+		PercentageDiscount pD;
+		FixedDiscount fD;
+		applyDiscount(Order order) //aplica formula convenabila
+		
+	- Context
+		Discount discount; //instantiat cu tipul de discount aplicabil in ziua respectiva
+		get/setDiscount()
+		getNumberOfOrders() //static ??
+		getStock() - Stock
+		
+	- Stock
+		Map < Product, Integer > // <ProductName, Quantity>
+		//metodele de validare
+		isAvailable() - boolean
+		
+	- IOrderHandler(Serverul)
+		placeOrder(User, list<orderLine>)
+			//valideaza
+			//arunca Exceptia(singura)
+		checkForSuggestions(list<orderLine>)	
+			//returneaza un SuggestiomResult
+		cancelOrder(Order, List<OrderLine>) // pt chelner
+		notifyWaiter(String tipCerere)
+		confirmPayment(Order) // pt chelner
+			// sistemul updateaza casa
+		orderDelivered(order) // pt chelner
+			
+	- SuggestionResult
+		List<OrderLine> valide
+		Map<Product, List<Product>> sugestii
+			// la validare, daca numarul de produse nu e disponibil, 
+			// se trece la valid cat este, si se trece produsul si la sugestii
+	
+		
+	
+		
